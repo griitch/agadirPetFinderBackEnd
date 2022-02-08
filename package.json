@@ -13,5 +13,21 @@
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "no-useless-escape": "off"
+    }
   }
 }
