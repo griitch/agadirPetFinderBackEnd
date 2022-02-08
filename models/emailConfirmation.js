@@ -7,7 +7,8 @@ const emailConfirmation = mongoose.Schema({
   },
 
   post: {
-      type : mongoose.Schema.Types.ObjectId, ref = "Post"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
   },
 });
 
