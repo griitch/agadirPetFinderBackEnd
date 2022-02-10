@@ -65,12 +65,6 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-postSchema.methods.markAsConfirmed = function () {
-  return mongoose
-    .model("Post", postSchema)
-    .findByIdAndUpdate(this._id, { $set: { confirmed: true } });
-};
-
 postSchema.pre("save", function (next) {
   if (this.breed === "") {
     this.breed = "non reconnu";
