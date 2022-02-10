@@ -3,7 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const port = process.env.PORT ?? 8080;
 const app = express();
+const cors = require("cors");
 
+app.use(express.json());
+app.use(cors());
 mongoose
   .connect(process.env.mongodb)
   .then(() => console.log("connected to mongodb"))
@@ -11,6 +14,22 @@ mongoose
 
 app.get("/", (req, res) => {
   res.send("hello world");
+});
+
+app.use("/posts", require("./api/posts"));
+
+app.use((err, req, res, next) => {
+  // right now it only handles mongoose validation errors
+  // consider adding support for other errors
+
+  if (err.name == "ValidationError") {
+    const errorsArray = err.message
+      .substring(err.message.indexOf(": ") + 2)
+      .split(", ");
+    res.json({ message: err._message, errors: errorsArray });
+  } else {
+    res.json(err);
+  }
 });
 
 app.listen(port, () => {
