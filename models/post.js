@@ -71,4 +71,11 @@ postSchema.methods.markAsConfirmed = function () {
     .findByIdAndUpdate(this._id, { $set: { confirmed: true } });
 };
 
+postSchema.pre("save", function (next) {
+  if (this.breed === "") {
+    this.breed = "non reconnu";
+  }
+  next();
+});
+
 module.exports = mongoose.model("Post", postSchema);
