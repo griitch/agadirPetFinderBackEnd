@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/posts", require("./api/posts"));
+app.use("/confirmation", require("./api/emailConfirmations"));
 
 app.use((err, req, res, next) => {
   // right now it only handles mongoose validation errors

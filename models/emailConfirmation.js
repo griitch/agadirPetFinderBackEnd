@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const emailConfirmation = mongoose.Schema({
   confirmationToken: {
-    type: Number,
+    type: String,
     required: true,
   },
 
