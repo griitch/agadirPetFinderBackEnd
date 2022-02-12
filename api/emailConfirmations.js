@@ -15,7 +15,10 @@ Router.post("/", async (req, res, next) => {
     emailConfirmation.post.confirmed = true;
     await emailConfirmation.post.save();
     res.json(emailConfirmation);
-    await EmailConfirmation.findByIdAndDelete(emailConfirmation._id);
+    // i will persist the email verification uuid and make it like a private key
+    // that will be used to delete the post
+    // for each post there is a public document id used for reading, and the private
+    // email verification token used for verifying the identity and for deleting
   } catch (error) {
     next(error);
   }

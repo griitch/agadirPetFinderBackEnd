@@ -7,6 +7,7 @@ const fileupload = require("express-fileupload");
 const Router = express.Router();
 const uniqid = require("uniqid");
 const handleImageUpload = require("../lib/middleware/handleImageUpload");
+const deleteImage = require("../lib/deleteImage");
 
 const sendConfirmationMail = require("../lib/sendEmail");
 
@@ -63,5 +64,36 @@ Router.post(
       .catch(console.log);
   }
 );
+
+Router.delete("/", async (req, res, next) => {
+  const { confirmationToken } = req.body;
+  try {
+    const emailConfirmation = await EmailConfirmation.findOne({
+      confirmationToken,
+    }).populate("post");
+    if (emailConfirmation === null) {
+      return res.status(404).json({ message: "Code invalide ou expiré" });
+    }
+
+    const emailConfirmationId = emailConfirmation._id;
+    const postId = emailConfirmation.post._id;
+    Promise.all([
+      EmailConfirmation.findByIdAndDelete(emailConfirmationId),
+      Post.findByIdAndDelete(postId),
+    ]).then((r) =>
+      res.status(200).json({
+        deleted: true,
+        postId,
+        emailConfirmationId,
+      })
+    );
+
+    if (emailConfirmation.post.picFileId) {
+      deleteImage(emailConfirmation.post.picFileId);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = Router;
