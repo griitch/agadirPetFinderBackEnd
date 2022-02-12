@@ -12,10 +12,6 @@ mongoose
   .then(() => console.log("connected to mongodb"))
   .catch(() => console.log("failed to connect to mongodb"));
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
-
 app.use("/posts", require("./api/posts"));
 app.use("/confirmation", require("./api/emailConfirmations"));
 
