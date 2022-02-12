@@ -67,7 +67,7 @@ const postSchema = new mongoose.Schema(
 
 postSchema.pre("save", function (next) {
   if (this.breed === "") {
-    this.breed = "non reconnu";
+    this.breed = "non reconnue";
   }
   next();
 });
