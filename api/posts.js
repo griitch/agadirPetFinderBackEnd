@@ -12,7 +12,9 @@ const deleteImage = require("../lib/deleteImage");
 const sendConfirmationMail = require("../lib/sendEmail");
 
 Router.get("/", async (req, res) => {
-  const posts = await Post.find(req.query);
+  const posts = await Post.find({ confirmed: true, ...req.query }).sort({
+    createdAt: "asc",
+  });
   res.json(posts);
 });
 
