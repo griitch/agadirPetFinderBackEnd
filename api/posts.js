@@ -12,11 +12,7 @@ const deleteImage = require("../lib/deleteImage");
 const sendConfirmationMail = require("../lib/sendEmail");
 
 Router.get("/", async (req, res) => {
-  // in the front data is sent with JSON.stringify(x, (k, v) => v ?? undefined)
-  // to not serialize null data
-
-  // todo : remove the console.logs
-  const posts = await Post.find(req.body);
+  const posts = await Post.find(req.query);
   res.json(posts);
 });
 
