@@ -11,9 +11,6 @@ const postSchema = new mongoose.Schema(
         message: "animal {VALUE} is not supported",
       },
     },
-
-    breed: { type: String, default: "non reconnu" },
-
     gender: {
       type: String,
       required: true,

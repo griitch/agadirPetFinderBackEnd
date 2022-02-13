@@ -28,7 +28,6 @@ Router.post(
   async (req, res, next) => {
     const {
       animal,
-      breed,
       gender,
       neighborhood,
       email,
@@ -40,7 +39,6 @@ Router.post(
 
     const newpost = new Post({
       animal,
-      breed,
       gender,
       neighborhood,
       email,
